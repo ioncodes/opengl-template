@@ -39,7 +39,7 @@ bool GlWindow::Init()
 	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
 	wc.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
 	wc.lpszMenuName = NULL;
-	wc.lpszClassName = (LPCSTR)m_className;
+	wc.lpszClassName = m_className;
 
 	if (RegisterClass(&wc) == 0)
 	{
@@ -47,8 +47,8 @@ bool GlWindow::Init()
 	}
 
 	m_hWnd = CreateWindow(
-	             (LPCSTR)m_className,
-	             (LPCSTR)m_windowTitle,
+	             m_className,
+	             m_windowTitle,
 	             WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX,
 	             CW_USEDEFAULT, CW_USEDEFAULT,
 	             CW_USEDEFAULT, CW_USEDEFAULT,
@@ -106,9 +106,9 @@ void GlWindow::Destroy()
 	}
 
 	WNDCLASS wc;
-	if (GetClassInfo(m_hInstance, (LPCSTR)m_className, &wc) != 0)
+	if (GetClassInfo(m_hInstance, m_className, &wc) != 0)
 	{
-		UnregisterClass((LPCSTR)m_className, m_hInstance);
+		UnregisterClass(m_className, m_hInstance);
 	}
 }
 
@@ -119,7 +119,7 @@ void GlWindow::ResizeWindow(UINT uWidth, UINT uHeight)
 	GetClientRect(m_hWnd, &rcClient);
 	GetWindowRect(m_hWnd, &rcWindow);
 
-	MoveWindow(this->m_hWnd,
+	MoveWindow(m_hWnd,
 	           rcWindow.left,
 	           rcWindow.top,
 	           uWidth + (rcWindow.right - rcWindow.left) - rcClient.right,
